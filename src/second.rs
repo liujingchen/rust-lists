@@ -78,12 +78,10 @@ impl<T> List<T> {
 impl<'a, T> Iterator for Iter<'a, T> {
     type Item = &'a T;
     fn next(&mut self) -> Option<Self::Item> {
-        if let Some(node) = self.next {
+        self.next.as_ref().map(|node| {
             self.next = &node.next;
-            Some(&node.elem)
-        } else {
-            None
-        }
+            &node.elem
+        })
     }
 }
 
